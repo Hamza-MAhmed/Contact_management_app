@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/stylesheets/add_contact.css">
+</head>
+<body>
+    <html lang="en">
+		
+    <div class="fields-container">
+        <h1>Add Contact <br><small>By providing all fields.</small></h1>
+
+        <form id="contactForm" action="/contact/add_contact" method="post">
+            <input type="text" name="name" placeholder="username" id="name" class="detail" /><br />
+            <input type="email" name="email" placeholder="Email" id="email" class="detail" /><br />
+            <input type="tel" name="phoneNumber" placeholder="Phone Num..." id="no" class="detail"/><br/>
+            <input type="text" name="address" placeholder="Address" id="address" class="detail"/><br/>
+            <input type="hidden" name="action" value="add"> <!-- Hidden field to identify add action -->
+            <input class="add" type="submit" class="add" value="Add contact">
+            </form>
+    </div>
+		
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(event) {
+            // Get the values of required fields
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const no = document.getElementById('no').value.trim();
+            const address = document.getElementById('address').value.trim();
+
+        
+
+            // Check if any required field is empty
+            if (!name || !email || !no || !address) {
+                // Prevent form submission
+                event.preventDefault();
+                
+                // Display an error message
+                alert('Please fill out all required fields.');
+            }
+        });
+    </script>
+</body>
+</html> 

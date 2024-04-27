@@ -1,0 +1,447 @@
+// router.post("/user/register" , function(req , res){
+//   const { username, email } = req.body;   //object destructuring from gpt
+//   const userData = new userModel({ username, email });
+
+//   userModel.register(userData , req.body.password)
+//   .then(function(){
+//     passport.authenticate("local")(req , res , function(){
+//       res.redirect("/user");
+//     })
+//   })
+// })
+
+// router.post('/register', async function(req, res, next) {
+//   try {
+//     let email = re.body.email;
+//     let check_mail = await userModel.findOne({email: email});
+//     if(check_mail){
+//       return res.send("Email already registered");
+//     }
+    
+//     const newUser = new userModel({
+//       username: req.body.username,
+//       email: email,
+//       password: req.body.password // Include the password field here
+//     });
+    
+//     // Register the new user with Passport.js
+//     userModel.register(newUser, userModel.password, function(err, user) {
+//       if (err) {
+//         console.error(err);
+//         return res.status(500).send("Error registering user");
+//       }
+//       // Authenticate the newly registered user
+//       passport.authenticate("local")(req, res, function() {
+//         console.log(newUser)
+//         res.redirect('/')
+//       });
+//     });
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Error creating user");
+//   }
+// });
+
+
+
+  // try {
+  //     const query = req.query.query; // Get the search query from request query parameters
+  //     // Implement search logic (e.g., query the database for contacts with matching names)
+  //     const searchResults = await contactModel.find({ name: { $regex: new RegExp(query, "i") } });
+  //     res.json(searchResults); // Send search results as JSON
+  // } catch (error) {
+  //     console.error('Error:', error);
+  //     res.status(500).json({ error: 'Internal server error' });
+  // }
+
+user.js
+
+
+// router.post("/", async function(req , res , next) {
+
+//   const submit = req.body.submit;
+
+//   if (submit === "Add contact"){
+//   console.log("acb")
+//   if (req.body.action === "add"){
+//   const { name, email, phoneNumber, address } = req.body;
+  
+//   const newContact = new contactModel({ name, email, phoneNumber, address });
+//   if(await (contactModel.findOne({name : newContact.name})) || await (userModel.findOne({phoneNumber : newContact.phoneNumber}))){
+//     return res.send("Already exist")
+//   }
+//   const existing_user = await userModel.findOne({username: req.session.passport.user});
+//   existing_user.contacts.push(newContact._id);
+//   newContact.user = existing_user._id
+//   await newContact.save();
+//   await existing_user.save();
+//   res.redirect("/contact/add");
+// }
+// }
+
+// else if(submit === "delete"){
+
+// if(req.body.action === "delete"){
+//   console.log("jddk")
+// const fullname = req.body;
+// const existing_user = await userModel.findOne({username: req.session.passport.user});
+// const contact = await contactModel.findOne({name : fullname});
+// if (contact){
+//   const id = contact._id;
+//   console.log(id)
+//   const index = existing_user.contacts.indexOf(id);
+//   if (index != -1){
+//     existing_user.contacts.splice(index , 1);
+
+//     await existing_user.save();
+//     await contactModel.deleteOne({ _id : id })
+//     res.redirect("/contact/delete");
+//   }
+//   else{
+//     return res.send("no such contact")
+//   }
+// }
+// else{
+//   return res.send("no such contact")
+// }
+// }
+// }
+// })
+contact.js
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="contacts" href="/stylesheets/contacts">
+
+</head>
+<body>
+    <h1>Contact Manger App <small>I personally use it everyday.</small></h1>
+		<div class="features">
+				<div class="features-btn">Read features and manual <span class="badge">important</span></div>
+				<ul class="features-list">
+					<li><b>No limits</b> contact List.</li>
+					<li>Save all contacts by press on <b>save button</b> now it's saved on your local drive.</li>
+					<li>Retrive your contact list anytime by press on <b>load button</b> easy access.</li>
+					<li>Delete all your contact list anytime by press on <b>delete all button</b> it will delete premanently.</li>
+					<li>Smart delete you can easily delete specific one contact by using <b>delete contact form</b> and write only first name then press <b>delete button</b>.</li>
+					<li>Sorting by first name alphabet or phone number by press on their <b>tabs in table</b>.</li>
+					<li><b>Smart sorting</b> since you use sort by alphabet or phone number it <b>automatically invoke save functionlity</b> which means when you load your contacts next time it gonna load as you sort it last time whether alphbet or phone num.</li>
+					<li class="coming-soon">
+							<h4>Coming Soon <span>stay Tuned</span></h4>
+							<ul>
+								<li>Search by name or phone number to make it easy to use for big contacts list.</li>
+								<li>More table tabs for email, birthdate...etc</li>
+								<li>Live edite capability to edit from the table itself.</li>
+							</ul>
+					</li>
+			</ul>
+		</div>
+    <!-- <div class="fields-container">
+        <div class="input-field name">
+            <label>
+                Name:
+                <input type="text" placeholder="Given Name...">
+            </label>
+        </div>
+        <div class="input-field family-name">
+            <label>
+                Family name:
+                <input type="text" placeholder="Family Name...">
+            </label>
+        </div>
+        <div class="input-field phone">
+            <label>
+                Phone:
+                <input type="text" placeholder="Phone Num...">
+            </label>
+        </div>
+    </div>
+    <button type="button" class="add-cont">Add Contact</button> -->
+    <div class="container">
+    <form action="/contact/add_contact" method="post">
+        <input type="text" name="name" placeholder="username" class="detail" /><br />
+        <input type="email" name="email" placeholder="Email" class="detail" /><br />
+        <!-- <input type="text" name="fullname" placeholder="fullname" class="detail" /><br /> -->
+        <input type="tel" name="phoneNumber" placeholder="Phone Num..." class="detail"/><br/>
+        <input type="text" name="address" placeholder="Address" class="detail"/><br/>
+        <input type="hidden" name="action" value="add"> <!-- Hidden field to identify add action -->
+        <input type="submit" class="add" value="Add contact">
+        </form>
+    </div>
+		
+		<div class="more-option">
+			<div class="more-option-btn">More Option</div>
+			<div class="option-container">
+				<button type="button" class="delete-all">Delete All</button>
+				<button type="button" class="save">Save</button>
+				<button type="button" class="load">Load</button>
+				<div class="delete-one">
+                    <form action="/contact/delete" method="post">
+                        <input type="hidden" name="_method" value="delete">
+					<label>Delete Contact:
+						<input type="text" name="fullname" placeholder="Write full name...">
+						<span>* Please write full name then delete button to delete specific contact.</span>
+                        <input type="hidden" name="action" value="delete"> <!-- Hidden field to identify delete action -->
+                        <input type="submit" class="delete-one-btn" value="delete">
+
+					</label>
+                    </form>
+				</div>
+			</div>
+		</div>
+	
+    <div class="contact-indx"></div>
+</body>
+</html>
+add contact
+
+
+
+
+
+  .search {    
+    
+    background-color: transparent;
+    cursor: default;
+    box-sizing: border-box;
+    
+    margin-left: 50%;
+    transform: translate(-50% );
+    width: 100%;
+    height: 100%;
+    
+    justify-content: center;
+    align-items: center;
+    box-shadow:0px 0px 20px 1px #ffffff ;
+    border-radius: 30px 0 0 30px;
+    /* border: 0; */
+    padding: 0 10px 0 10px;
+    text-align:left;
+        color: black;
+        height: 50px;
+        width: 700px;
+        font-size: 25px;
+        font-weight: 1000;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 10px; /* Adjust margin as needed */
+  }
+    .search::selection{
+        background-color: white;
+        color: white;
+        }
+
+    .search-btn{
+                transition: 0.2s ease-in-out;
+                box-shadow:0px 0px 20px 1px greenyellow ;
+                border: 0;
+                border-radius: 0 30px 30px 0;
+                padding: 0 10px 0 10px;
+                text-align: center;
+                color: black;
+                position: relative;
+                background-color: greenyellow;
+                height: 50px;
+                width: 100px;
+                font-size: 25px;
+                font-weight: 1000;
+                
+                align-items: center;
+                justify-content: center;
+                display: inline-block;
+                vertical-align: middle;
+                margin-left: -2px; /* Adjust margin as needed */
+            }
+    .search:focus{
+                border: 0;
+                outline: 0;
+     }
+        .search:hover{
+                cursor: text;
+        }  
+        .search-btn:hover{
+                    transition: 0.2s ease-in-out;
+                    background-color: green;
+                    box-shadow:0px 0px 20px 1px green ;
+                    font-size: 30px;
+                    font-weight: 800;
+                    cursor: pointer;
+        } 
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <link rel="stylesheet" href="style.css">
+
+
+<body>
+    <div class="intro">
+        <div class="box">
+            <div class="inner-box" id="inner-box1">
+                <p class="num" id="hr"></p>
+            </div>
+            <div class="colon">:</div>
+            <div class="inner-box" id="inner-box2">
+                <p class="num" id="min"></p>
+            </div>
+            <div class="inner-box" id="inner-box3">
+                <p class="num" id="sec"></p>
+            </div>
+            <p class="name">hamza</p>
+        </div>
+    </div>
+    <script src="/script.js"></script>
+</body>
+</html>
+
+
+
+setInterval(set , 1000)
+function set(){
+    let time = new Date()
+    document.getElementById("hr").innerHTML = time.getHours()%12 >= 10 ? time.getHours()%12 : "0"+time.getHours()%12
+    document.getElementById("min").innerHTML = time.getMinutes() >= 10 ? time.getMinutes() : "0"+time.getMinutes()
+    document.getElementById("sec").innerHTML = time.getSeconds() >= 10 ? time.getSeconds() : "0"+time.getSeconds()
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// document.getElementsByClassName("c")[0].innerHTML = new Date()
+//c = new Date()
+// let hr = new Date().getHours()
+// document.getElementsByClassName("hr")[0].innerHTML = hr
+// document.getElementsByClassName("colon")[0].innerHTML = ":"
+
+
+
+
+
+* {
+
+text-align: center;
+
+}
+.intro {
+    background-image: url(clockbg.jpg);
+    height: 100vh;
+  }
+
+.box {
+    height: 250px;
+    width: 40%;
+    background-color: black;
+    opacity: .8;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);  
+    display: flex;
+    align-items: center;  
+}
+
+.inner-box {
+    height: 80px;
+    width: 35%;
+    background-color: silver;
+    display: flex;
+    align-items: center;
+    border: 1px solid #333;
+    border-radius: 20%;
+    box-shadow: inset 5px 5px 10px rgba(0, 0, 0, 0.5),
+                /* Outset shadow */
+                5px 5px 10px rgba(0, 0, 0, 0.5);
+    /* box-shadow: inset 0 0 10px tomato, 0 0 10px green; */
+
+    /* padding: 0px; */
+}
+
+#inner-box1{
+    position: absolute;
+    top: 15%;
+    left: 10%;
+}
+#inner-box2{
+    position: absolute;
+    top: 15%;
+    right: 10%;
+    
+}
+#inner-box3{
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -0%);
+}
+.colon{
+    color: white;
+    font-size: 6vw;
+    position: absolute;
+    left: 50%;
+    top: 30%;
+    transform: translate(-50%, -50%);
+    
+}
+.num {
+    text-align: center;
+    margin: auto;
+    font-size:6vw;
+}
+
+.name{
+    color: black;
+}
+
+router.post("/login" , passport.authenticate("local" , {
+    successRedirect: "/user/profile",
+    failureRedirect: "/user/login",
+    failureFlash: true
+}));
+
+router.get("/login", function(req, res) {
+    // Retrieve flash messages and pass them to the login page
+    res.render("login", { message: req.flash('error') });
+});
+<p><%= message %></p>
